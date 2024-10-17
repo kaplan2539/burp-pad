@@ -25,7 +25,7 @@ jobs:
         run: |
           p4a apk \
             --private src \
-            --name hello_kivy
+            --name hello_kivy \
             --dist_name hello_kivy \
             --package de.deac0.hello_kivy \
             --version 0.1 \
