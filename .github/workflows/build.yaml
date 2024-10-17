@@ -22,5 +22,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run python-for-android
-        run: python-for-android
-
+        run: |
+          p4a apk \
+            --private src \
+            --dist_name hello_kivy \
+            --package de.deac0.hello_kivy \
+            --version 0.1 \
+            --bootstrap=sdl2 \
+            --requirements=python3,kivy \
+            --arch=armeabi-v7a
