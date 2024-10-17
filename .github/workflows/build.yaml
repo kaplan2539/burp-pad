@@ -4,10 +4,10 @@ on:
   push:
 
 jobs:
-  docker:
+  build-in-docker:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/kaplan2539/p4a
+      image: ghcr.io/kaplan2539/p4a-container
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
