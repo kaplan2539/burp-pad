@@ -21,6 +21,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Run python-for-android
         run: |
           p4a apk \
@@ -32,8 +33,49 @@ jobs:
             --bootstrap=sdl2 \
             --requirements=python3,kivy \
             --arch=armeabi-v7a
+
       - name: Archive binary
+        id: archive-binary
         uses: actions/upload-artifact@v4
         with:
           name: apk
           path: hello_kivy-debug-0.1.apk
+
+      - name: Setup Pages
+          id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: hello_kivy-debug-0.1.apk
+
+            #      - name: Generate QR Code
+            #        run: |
+            #          sudo apt update && \
+            #          sudo apt install -y qrencode && \
+            #          echo '${{ steps.archive-binary.outputs.artifact-url }}' | qrencode -o- -t ANSI
+
+# Deploy job
+  deploy:
+    # Add a dependency to the build job
+    needs: build-in-docker
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+
+
