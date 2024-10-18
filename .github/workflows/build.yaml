@@ -42,7 +42,7 @@ jobs:
           path: hello_kivy-debug-0.1.apk
 
       - name: Setup Pages
-          id: pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
@@ -76,6 +76,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
-
-
+        uses: actions/deploy-pages@v4
