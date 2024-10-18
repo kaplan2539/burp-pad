@@ -49,9 +49,10 @@ jobs:
           sudo apt update
           sudo apt install -y qrencode
           echo '<!DOCTYPE html>' >pages_out/index.html
-          echo '<html><body><pre>' >pages_out/index.html
+          echo '<html><body><p><pre>' >pages_out/index.html
           echo 'https://d.eadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
-          echo '</pre></body></html>' >>pages_out/index.html
+          echo "</pre></p><p><a href=\"https://d.eadc0.de/hello-kivy/hello_kivy-debug-0.1.apk\">hello_kivy-debug-0.1.apk</a></p>" >> pages_out/index.html
+          echo '</body></html>' >>pages_out/index.html
 
       - name: Archive binary
         id: archive-binary
