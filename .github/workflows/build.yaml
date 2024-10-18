@@ -50,7 +50,7 @@ jobs:
           sudo apt install -y qrencode
           echo '<!DOCTYPE html>' >pages_out/index.html
           echo '<html><body><pre>' >pages_out/index.html
-          echo '0xdeadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
+          echo 'https://deadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
           echo '</pre></body></html>' >>pages_out/index.html
 
       - name: Archive binary
