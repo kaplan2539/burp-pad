@@ -22,6 +22,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - uses: actions/cache@v4
+           with:
+             path: |
+                 ~/.local/share/python-for-android
+                 ~/.gradle
+             key: p4a-${{ runner.os }}-cache
+
       - name: Run python-for-android
         run: |
           p4a apk \
@@ -36,15 +43,14 @@ jobs:
 
       - name: Generate GitHub Pages
         run: |
-          mkdir -p pages_out && \
-          rm -rf pages_out/* && \
-          cp hello_kivy-debug-0.1.apk pages_out/ && \
-          \
-          sudo apt update && \
-          sudo apt install -y qrencode && \
-          echo '<!DOCTYPE html>' >pages_out/index.html && \
-          echo '<html><body><pre>' >pages_out/index.html && \
-          echo '0xdeadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html && \
+          mkdir -p pages_out
+          rm -rf pages_out/*
+          cp hello_kivy-debug-0.1.apk pages_out/
+          sudo apt update
+          sudo apt install -y qrencode
+          echo '<!DOCTYPE html>' >pages_out/index.html
+          echo '<html><body><pre>' >pages_out/index.html
+          echo '0xdeadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
           echo '</pre></body></html>' >>pages_out/index.html
 
       - name: Archive binary
