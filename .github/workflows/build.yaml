@@ -34,12 +34,25 @@ jobs:
             --requirements=python3,kivy \
             --arch=armeabi-v7a
 
-            #      - name: Archive binary
-            #        id: archive-binary
-            #        uses: actions/upload-artifact@v4
-            #        with:
-            #          name: apk
-            #          path: hello_kivy-debug-0.1.apk
+      - name: Generate GitHub Pages
+        run: |
+          mkdir -p pages_out && \
+          rm -rf pages_out/* && \
+          cp hello_kivy-debug-0.1.apk pages_out/ && \
+          \
+          sudo apt update && \
+          sudo apt install -y qrencode && \
+          echo '<!DOCTYPE html>' >pages_out/index.html && \
+          echo '<html><body><pre>' >pages_out/index.html && \
+          echo '0xdeadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html && \
+          echo '</pre></body></html>' >>pages_out/index.html
+
+      - name: Archive binary
+        id: archive-binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: hello_kivy-debug-0.1.apk
 
       - name: Setup Pages
         id: pages
@@ -48,13 +61,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: hello_kivy-debug-0.1.apk
-
-            #      - name: Generate QR Code
-            #        run: |
-            #          sudo apt update && \
-            #          sudo apt install -y qrencode && \
-            #          echo '${{ steps.archive-binary.outputs.artifact-url }}' | qrencode -o- -t ANSI
+          path: pages_out
 
 # Deploy job
   deploy:
