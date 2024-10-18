@@ -23,11 +23,11 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: actions/cache@v4
-           with:
-             path: |
-                 ~/.local/share/python-for-android
-                 ~/.gradle
-             key: p4a-${{ runner.os }}-cache
+        with:
+          path: |
+            ~/.local/share/python-for-android
+            ~/.gradle
+          key: p4a-${{ runner.os }}-cache
 
       - name: Run python-for-android
         run: |
