@@ -33,9 +33,9 @@ jobs:
         run: |
           p4a apk \
             --private src \
-            --name hello_kivy \
-            --dist_name hello_kivy \
-            --package de.deac0.hello_kivy \
+            --name burp_pad \
+            --dist_name burp_pad \
+            --package de.deac0.burp_pad \
             --version 0.1 \
             --bootstrap=sdl2 \
             --requirements=python3,kivy,sounddevice,soundfile,numpy \
@@ -48,13 +48,13 @@ jobs:
         run: |
           mkdir -p pages_out
           rm -rf pages_out/*
-          cp hello_kivy-debug-0.1.apk pages_out/
+          cp burp_pad-debug-0.1.apk pages_out/
           sudo apt update
           sudo apt install -y qrencode
           echo '<!DOCTYPE html>' >pages_out/index.html
           echo '<html><body><p><pre>' >pages_out/index.html
-          echo 'https://d.eadc0.de/hello-kivy/hello_kivy-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
-          echo "</pre></p><p><a href=\"https://d.eadc0.de/hello-kivy/hello_kivy-debug-0.1.apk\">hello_kivy-debug-0.1.apk</a></p>" >> pages_out/index.html
+          echo 'https://d.eadc0.de/burp-pad/burp_pad-debug-0.1.apk' | qrencode -o- -t UTF8i >> pages_out/index.html
+          echo "</pre></p><p><a href=\"https://d.eadc0.de/burp-pad/burp_pad-debug-0.1.apk\">burp_pad-debug-0.1.apk</a></p>" >> pages_out/index.html
           echo '</body></html>' >>pages_out/index.html
 
       - name: Archive binary
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: hello_kivy-debug-0.1.apk
+          path: burp_pad-debug-0.1.apk
 
       - name: Setup Pages
         id: pages
