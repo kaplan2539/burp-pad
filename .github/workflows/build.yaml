@@ -40,7 +40,9 @@ jobs:
             --bootstrap=sdl2 \
             --requirements=python3,kivy,sounddevice,soundfile,numpy \
             --arch=armeabi-v7a \
-            --permissions=RECORD_AUDIO,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+            --permission=RECORD_AUDIO \
+            --permission=WRITE_EXTERNAL_STORAGE \
+            --permission=READ_EXTERNAL_STORAGE
             
       - name: Generate GitHub Pages
         run: |
