@@ -23,11 +23,11 @@ class Game(Widget):
         self.nx=40
         self.ny=40
         if Window.width >= Window.height:
-            self.w = self.h = int(Window.height / self.ny)
-            self.nx = int(Window.width / self.w)
+            self.w = self.h = Window.height // self.ny
+            self.nx = Window.width // self.w
         else:
-            self.w = self.h = int(Window.width / self.nx)
-            self.ny = int(Window.height / self.h)
+            self.w = self.h = Window.width // self.nx
+            self.ny = Window.height // self.h
         self.n = self.nx*self.ny
         self.a=[]
         self.b=[]
@@ -69,6 +69,17 @@ class Game(Widget):
         y = y % self.ny
         return self.a[y * self.nx + x]
 
+    def set(self,x,y,d):
+        x = x % self.nx
+        y = y % self.ny
+        print(f"set x={x} y={y}")
+        self.a[y * self.nx + x] = d
+
+    def pxl2pos(self,x,y):
+        x = int(x // self.w)
+        y = int(y // self.h)
+        return (x,y)
+
     def neighbors(self,x,y):
         return self.get(x-1,y-1) + self.get(x,y-1) + self.get(x+1,y-1) \
              + self.get(x-1,y) + self.get(x+1,y) \
@@ -79,6 +90,12 @@ class Game(Widget):
         x *= self.w
         y *= self.h
         return (x,y)
+
+    def on_touch_down(self,touch):
+        (x,y) = self.pxl2pos(touch.x,touch.y)
+        print(f"set x={x} y={y}")
+        for i in range(0,self.n//40):
+            self.set(random.randint(x-10,x+10),random.randint(y-10,y+10),1)
 
     def draw(self,dt):
         self.canvas.clear()
